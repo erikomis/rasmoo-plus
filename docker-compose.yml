@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:11.2
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: senha123
+      MYSQL_DATABASE: RASPLUS
+      MYSQL_USER: rasmoo
+      MYSQL_PASSWORD: senha123
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  redis:
+    image: redis:6.2
+    container_name: redis-rasplus
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  mariadb_data:
+  redis_data:
