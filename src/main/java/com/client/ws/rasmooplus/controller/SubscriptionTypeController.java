@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/subscription-type")
+@RequestMapping("v1/subscription-type")
 public class SubscriptionTypeController {
 
 
