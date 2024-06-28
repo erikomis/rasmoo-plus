@@ -2,6 +2,7 @@ package com.client.ws.rasmooplus.service.impl;
 
 import com.client.ws.rasmooplus.dto.SubscriptionTypeDto;
 import com.client.ws.rasmooplus.exception.NotFoudException;
+import com.client.ws.rasmooplus.mapper.SubscriptionTypeMapper;
 import com.client.ws.rasmooplus.model.SubscriptionType;
 import com.client.ws.rasmooplus.repository.SubscriptionTypeRepository;
 import com.client.ws.rasmooplus.service.SubscriptionTypeService;
@@ -34,33 +35,23 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
     @Override
     public SubscriptionType create(SubscriptionTypeDto subscriptionType) {
 
-        if (Objects.nonNull(subscriptionType.getId())){
+        if (Objects.nonNull(subscriptionType.getId())) {
             throw new NotFoudException("Id deve ser nulo");
         }
 
-        return subscriptionTypeRepository.save(SubscriptionType.builder()
-                .id(subscriptionType.getId())
-                .name(subscriptionType.getName())
-                .AccessMonth(subscriptionType.getAccessMonth())
-                .price(subscriptionType.getPrice())
-                .productKey(subscriptionType.getProductKey())
-                .build());
+        return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoToEntity(subscriptionType));
     }
 
     @Override
     public SubscriptionType update(Long id, SubscriptionTypeDto subscriptionType) {
 
-        SubscriptionType oldSubscriptionType = getSubscriptionType(id);
+
+        getSubscriptionType(id);
+
+        subscriptionType.setId(id);
 
 
-
-        return subscriptionTypeRepository.save(SubscriptionType.builder()
-                .id(id)
-                .name(subscriptionType.getName() != null ? subscriptionType.getName() : oldSubscriptionType.getName())
-                .AccessMonth(subscriptionType.getAccessMonth() !=null ? subscriptionType.getAccessMonth() : oldSubscriptionType.getAccessMonth())
-                .price(subscriptionType.getPrice() != null ? subscriptionType.getPrice() : oldSubscriptionType.getPrice())
-                .productKey(subscriptionType.getProductKey())
-                .build());
+        return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoToEntity(subscriptionType));
     }
 
     @Override

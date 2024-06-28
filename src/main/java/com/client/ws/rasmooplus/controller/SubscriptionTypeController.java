@@ -5,6 +5,8 @@ package com.client.ws.rasmooplus.controller;
 import com.client.ws.rasmooplus.dto.SubscriptionTypeDto;
 import com.client.ws.rasmooplus.model.SubscriptionType;
 import com.client.ws.rasmooplus.service.impl.SubscriptionTypeServiceImpl;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -38,18 +40,18 @@ public class SubscriptionTypeController {
 
 
     @PostMapping
-    public ResponseEntity<SubscriptionType> create(@RequestBody SubscriptionTypeDto dtoSubscriptionType) {
+    public ResponseEntity<SubscriptionType> create(@RequestBody @Valid SubscriptionTypeDto dtoSubscriptionType) {
         SubscriptionType createdSubscriptionType = subscriptionTypeService.create(dtoSubscriptionType);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSubscriptionType);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<SubscriptionType> update(@PathVariable("id") Long id, @RequestBody SubscriptionTypeDto dtoSubscriptionType) {
 
         return  ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.update(id, dtoSubscriptionType));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         subscriptionTypeService.delete(id);
         return  ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
