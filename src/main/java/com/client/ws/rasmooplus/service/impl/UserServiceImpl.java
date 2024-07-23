@@ -40,8 +40,6 @@ public class UserServiceImpl implements UserService {
         UserType userType = userTypeOpt.get();
         User userM = UserMapper.fromDtoToEntity(user, userType, null);
 
-        System.out.println(userM);
-
 
         return userRepository.save(userM);
     }
