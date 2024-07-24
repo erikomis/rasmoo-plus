@@ -4,9 +4,11 @@ import com.client.ws.rasmooplus.controller.SubscriptionTypeController;
 import com.client.ws.rasmooplus.dto.SubscriptionTypeDto;
 import com.client.ws.rasmooplus.exception.NotFoudException;
 import com.client.ws.rasmooplus.mapper.SubscriptionTypeMapper;
-import com.client.ws.rasmooplus.model.SubscriptionType;
-import com.client.ws.rasmooplus.repository.SubscriptionTypeRepository;
+import com.client.ws.rasmooplus.model.jpa.SubscriptionType;
+import com.client.ws.rasmooplus.repository.jpa.SubscriptionTypeRepository;
 import com.client.ws.rasmooplus.service.SubscriptionTypeService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +27,11 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
 
     @Override
+    @Cacheable(value = "subscriptionType")
     public List<SubscriptionType> findAll() {
         return this.subscriptionTypeRepository.findAll();
     }
-
+    @Cacheable(value = "subscriptionType" , key = "#id")
     @Override
     public SubscriptionType findById(Long id) {
         return getSubscriptionType(id).add(
@@ -46,6 +49,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
         );
     }
 
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     @Override
     public SubscriptionType create(SubscriptionTypeDto subscriptionType) {
 
@@ -57,6 +61,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
     }
 
     @Override
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     public SubscriptionType update(Long id, SubscriptionTypeDto subscriptionType) {
 
 
@@ -69,6 +74,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
     }
 
     @Override
+    @CacheEvict(value = "subscriptionType", allEntries = true)
     public void delete(Long id) {
 
         getSubscriptionType(id);
