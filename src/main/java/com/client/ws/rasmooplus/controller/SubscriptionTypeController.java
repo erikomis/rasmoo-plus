@@ -3,13 +3,11 @@ package com.client.ws.rasmooplus.controller;
 
 
 import com.client.ws.rasmooplus.dto.SubscriptionTypeDto;
-import com.client.ws.rasmooplus.model.SubscriptionType;
+import com.client.ws.rasmooplus.model.jpa.SubscriptionType;
 import com.client.ws.rasmooplus.service.impl.SubscriptionTypeServiceImpl;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,16 +20,23 @@ import java.util.List;
 public class SubscriptionTypeController {
 
 
-    @Autowired
-    private SubscriptionTypeServiceImpl subscriptionTypeService;
+
+    private final SubscriptionTypeServiceImpl subscriptionTypeService;
+
+    public  SubscriptionTypeController(SubscriptionTypeServiceImpl subscriptionTypeService){
+        this.subscriptionTypeService = subscriptionTypeService;
+    }
 
 
-    @Cacheable(value = "subscriptionType")
-    @GetMapping()
+
+
+    @GetMapping
     public ResponseEntity<List<SubscriptionType>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findAll());
 
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<SubscriptionType> findById(@PathVariable("id") Long id) {
@@ -39,6 +44,7 @@ public class SubscriptionTypeController {
 
 
     }
+
 
 
     @PostMapping
