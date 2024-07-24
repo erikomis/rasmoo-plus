@@ -1,7 +1,7 @@
 package com.client.ws.rasmooplus.controller;
 
 import com.client.ws.rasmooplus.dto.UserDto;
-import com.client.ws.rasmooplus.model.User;
+import com.client.ws.rasmooplus.model.jpa.User;
 import com.client.ws.rasmooplus.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +23,7 @@ public class UserController {
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDto user) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
     }
+
+
+
 }

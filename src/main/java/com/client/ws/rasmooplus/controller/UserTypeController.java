@@ -1,6 +1,6 @@
 package com.client.ws.rasmooplus.controller;
 
-import com.client.ws.rasmooplus.model.UserType;
+import com.client.ws.rasmooplus.model.jpa.UserType;
 import com.client.ws.rasmooplus.service.UserTypeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/user-type")
 public class UserTypeController {
 
-    private UserTypeService userTypeService;
+    private final UserTypeService userTypeService;
 
     public UserTypeController(UserTypeService userTypeService) {
         this.userTypeService = userTypeService;
